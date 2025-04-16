@@ -85,7 +85,6 @@ jobs:
         
         # Check if we are running on Windows
         if [[ "$RUNNER_OS" == "Windows" ]]; then
-          # Make sure executable path is correct for Windows, only add 'Release/' once
           executable_name="{executable_name}.exe"
         fi
         
@@ -103,14 +102,9 @@ jobs:
         echo "Running $executable_name"
         
         if [[ "$RUNNER_OS" == "Windows" ]]; then
-          # On Windows, we run the executable from the Release directory (no additional `Release/` prepending)
-          ./$executable_name > app_output.txt
+          # On Windows, we run the executable from the Release directory
+          ./Release/$executable_name > app_output.txt
         else
           # For non-Windows platforms, we just use the executable name
           ./$executable_name > app_output.txt
         fi
-
-        
-        # Try to run it if it exists
-        echo "Running $executable_name"
-        ./$executable_name > app_output.txt
