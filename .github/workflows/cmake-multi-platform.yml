@@ -82,6 +82,7 @@ jobs:
         executable_name="stack_overflow"
         if [[ "$RUNNER_OS" == "Windows" ]]; then
           executable_name="Release/${executable_name}.exe"
+          executable_path="Release/$executable_name"  # Windows binary is in Release/
         fi
     
         echo "Running $executable_name"
