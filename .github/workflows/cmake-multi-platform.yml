@@ -59,6 +59,14 @@ jobs:
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: ctest --build-config ${{ matrix.build_type }}
       
+    - name: List build directory contents
+      shell: bash
+      working-directory: ${{ steps.strings.outputs.build-output-dir }}
+      run: |
+        echo "Listing build directory contents:"
+        ls -R ${{ steps.strings.outputs.build-output-dir }}
+    
+                
     - name: Check if executable exists
       shell: bash
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
@@ -67,28 +75,27 @@ jobs:
         if [[ "$RUNNER_OS" == "Windows" ]]; then
           executable_name="Release/${executable_name}.exe"
         fi
-
+    
+        # Check if the executable exists
         if [ -f "$executable_name" ]; then
           echo "Executable exists: $executable_name"
         else
           echo "Executable not found!"
           exit 1
         fi
-
-        
+    
     - name: Run executable and check output format
       shell: bash
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
         executable_name="stack_overflow"
         if [[ "$RUNNER_OS" == "Windows" ]]; then
-          executable_name="${executable_name}.exe"
+          executable_name="Release/${executable_name}.exe"  # Ensure correct path for Windows
         fi
     
         echo "Full executable path: $executable_name"
-
     
-        # Check if executable exists
+        # Check if the executable exists
         if [ -f "$executable_name" ]; then
           echo "Executable exists: $executable_name"
         else
