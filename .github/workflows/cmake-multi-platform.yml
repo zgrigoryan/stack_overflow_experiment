@@ -82,10 +82,13 @@ jobs:
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
         executable_name="stack_overflow"
+        
+        # Check if we are running on Windows
         if [[ "$RUNNER_OS" == "Windows" ]]; then
-          executable_name="Release/${executable_name}.exe"  # Ensure correct path for Windows
+          # Make sure executable path is correct for Windows
+          executable_name="Release/${executable_name}.exe"
         fi
-    
+        
         echo "Full executable path: $executable_name"
     
         # Check if the executable exists
@@ -95,13 +98,14 @@ jobs:
           echo "Executable not found!"
           exit 1
         fi
-    
+        
         # Try to run it if it exists
         echo "Running $executable_name"
         
         if [[ "$RUNNER_OS" == "Windows" ]]; then
-          # Run executable using Git Bash on Windows
+          # Ensure correct path and run executable on Windows
           ./Release/$executable_name > app_output.txt
         else
-          ./stack_overflow > app_output.txt
+          # Run on non-Windows platforms
+          ./$executable_name > app_output.txt
         fi
