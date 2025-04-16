@@ -90,6 +90,16 @@ The segmentation fault happens because the program is trying to allocate too muc
 - Optionally, increase the stack size temporarily to test larger arrays.
 - Compare heap vs. stack memory allocation.
 
+*When array size is reduced, this output is printed: *
+
+```
+Attempting to allocate a large local array on the stack...
+Heap address of array: 0x120008000
+Successfully allocated array of size 1000000 on heap.
+Attempting to allocate a large local array on the stack...
+Stack address of array: 0x16af5a6e8
+Successfully allocated array of size 1000000 on stack.
+```
 ---
 
 ## Conclusion
