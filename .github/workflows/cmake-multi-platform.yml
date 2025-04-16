@@ -75,22 +75,35 @@ jobs:
           exit 1
         fi
 
+        
     - name: Run executable and check output format
-      shell: bash  
+      shell: bash
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
         executable_name="stack_overflow"
         if [[ "$RUNNER_OS" == "Windows" ]]; then
-          executable_name="Release/${executable_name}.exe"
+          executable_name="${executable_name}.exe"
         fi
-
-        echo "Running $executable_name"
-
-        # Run the executable in bash
-        if [[ "$RUNNER_OS" == "Windows" ]]; then
-          # Windows-specific way to run .exe using bash
-          ./$executable_name > app_output.txt
+    
+        echo "Full executable path: $executable_name"
+    
+        # List contents of Release to see if the .exe exists
+        ls -l Release/
+    
+        # Check if executable exists
+        if [ -f "$executable_name" ]; then
+          echo "Executable exists: $executable_name"
         else
-          # For non-Windows systems, directly run the binary
+          echo "Executable not found!"
+          exit 1
+        fi
+    
+        # Try to run it if it exists
+        echo "Running $executable_name"
+        
+        if [[ "$RUNNER_OS" == "Windows" ]]; then
+          # Run executable using Git Bash on Windows
+          ./Release/$executable_name > app_output.txt
+        else
           ./stack_overflow > app_output.txt
         fi
