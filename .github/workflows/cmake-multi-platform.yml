@@ -58,13 +58,6 @@ jobs:
     - name: Test
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: ctest --build-config ${{ matrix.build_type }}
-      
-    - name: List build directory contents
-      shell: bash
-      working-directory: ${{ steps.strings.outputs.build-output-dir }}
-      run: |
-        echo "Listing build directory contents:"
-        ls -R ${{ steps.strings.outputs.build-output-dir }}
     
                 
     - name: Check if executable exists
