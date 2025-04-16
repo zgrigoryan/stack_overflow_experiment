@@ -85,7 +85,7 @@ jobs:
         
         # Check if we are running on Windows
         if [[ "$RUNNER_OS" == "Windows" ]]; then
-          executable_name="{executable_name}.exe"
+          executable_name="${executable_name}.exe"
         fi
         
         echo "Full executable path: $executable_name"
