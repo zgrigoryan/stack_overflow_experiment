@@ -76,14 +76,21 @@ jobs:
         fi
 
     - name: Run executable and check output format
-      shell: bash
+      shell: bash  
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
         executable_name="stack_overflow"
         if [[ "$RUNNER_OS" == "Windows" ]]; then
           executable_name="Release/${executable_name}.exe"
-          executable_path="Release/$executable_name"  # Windows binary is in Release/
         fi
-    
+
         echo "Running $executable_name"
-        ./$executable_name > app_output.txt
+
+        # Run the executable in bash
+        if [[ "$RUNNER_OS" == "Windows" ]]; then
+          # Windows-specific way to run .exe using bash
+          ./$executable_name > app_output.txt
+        else
+          # For non-Windows systems, directly run the binary
+          ./stack_overflow > app_output.txt
+        fi
