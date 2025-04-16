@@ -79,7 +79,7 @@ jobs:
       shell: bash
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
-        executable_name="cache_matmul"
+        executable_name="stack_overflow"
         if [[ "$RUNNER_OS" == "Windows" ]]; then
           executable_name="Release/${executable_name}.exe"
         fi
