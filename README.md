@@ -100,6 +100,8 @@ Attempting to allocate a large local array on the stack...
 Stack address of array: 0x16af5a6e8
 Successfully allocated array of size 1000000 on stack.
 ```
+
+One interesting observation we can make here is the address of the array when it's allocated on the heap vs the stack. It is visible that the heap allocation gets lower addresses, while the stack memory allocation takes addresses higher in the memory. 
 ---
 
 ## Conclusion
