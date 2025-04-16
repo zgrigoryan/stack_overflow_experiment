@@ -1,31 +1,27 @@
-/**
- * Write a program to declare a very large local array, 
- * then explore what happens when the stack size is exceeded 
- * beyond the limits of the system.
- */
-
 #include <iostream>
 using namespace std;
 
 int main() {
     cout << "Attempting to allocate a large local array on the stack..." << endl;
 
-    // Try changing this number to provoke or avoid a crash
-    const size_t arraySize = 100000000; // 100 million ints = ~400MB
+    const size_t arraySize = 100000000;  // 100 million ints = ~400MB
 
-    // Declare a large local array (on stack)
-    int array[arraySize];  
+    // Allocate memory on the heap
+    int* array_on_heap = new int[arraySize];
+    cout << "Heap address of array: " << array_on_heap << endl;
+    cout << "Successfully allocated array of size " << arraySize << " on heap." << endl;
 
-    cout << "Stack address of array: " << &array << endl;
-
-    // If magically allocated, this will be outputted     
-    cout << "Successfully allocated array of size " << arraySize << " on stack." << endl;
-
-    for (int i = 0; i < 10; ++i) {
-        array[i] = i * 10;
-        cout << "array[" << i << "] = " << array[i] << endl;
+    // Attempt to allocate a large local array on the stack
+    cout << "Attempting to allocate a large local array on the stack..." << endl;
+    try {
+        int array[arraySize];  // This is where it crashes
+        cout << "Stack address of array: " << &array << endl;
+        cout << "Successfully allocated array of size " << arraySize << " on stack." << endl;
+    } catch (...) {
+        cout << "Stack allocation failed!" << endl;
     }
 
+    delete[] array_on_heap;  // Don't forget to free heap memory
     return 0;
 }
 

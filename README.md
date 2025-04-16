@@ -62,10 +62,33 @@ You can check your **stack size** with the following command:
 ```bash
 ulimit -s
 ```
-
 On most systems, this will output something like `8192` or `8176` KB, which is roughly **8MB**.
 
+
+One way to change the limit is by using the command:
+
+```bash 
+ulimit -s 65532  # Increase stack size (64MB)
+```
+
+However, you might receive a message: 
+- 'ulimit: value exceeds hard limit'
+
 ---
+
+## Ouput example
+
+You are likely to get the following output:
+
+- zsh: segmentation fault  ./executable_name 
+
+The segmentation fault happens because the program is trying to allocate too much memory on the stack. Since stack space is limited, you quickly exceed it and hit the overflow.
+
+- To experiment further:
+- Start with smaller arrays.
+- Use recursion to trigger stack overflow.
+- Optionally, increase the stack size temporarily to test larger arrays.
+- Compare heap vs. stack memory allocation.
 
 ## Conclusion
 
