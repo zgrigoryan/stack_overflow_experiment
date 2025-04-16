@@ -83,6 +83,6 @@ jobs:
         if [[ "$RUNNER_OS" == "Windows" ]]; then
           executable_name="Release/${executable_name}.exe"
         fi
-
+    
         echo "Running $executable_name"
         ./$executable_name > app_output.txt
