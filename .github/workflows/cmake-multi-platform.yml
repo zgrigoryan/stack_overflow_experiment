@@ -76,14 +76,13 @@ jobs:
         fi
 
     - name: Run executable and check output format
-      shell: pwsh  
+      shell: bash
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
-        $executable_name = "stack_overflow"
-        if ($env:RUNNER_OS -eq "Windows") {
-          $executable_name = "Release/${executable_name}.exe"
-        }
+        executable_name="cache_matmul"
+        if [[ "$RUNNER_OS" == "Windows" ]]; then
+          executable_name="Release/${executable_name}.exe"
+        fi
     
-        Write-Host "Running $executable_name"
+        echo "Running $executable_name"
         ./$executable_name > app_output.txt
-
