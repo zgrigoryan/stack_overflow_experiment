@@ -86,9 +86,7 @@ jobs:
         fi
     
         echo "Full executable path: $executable_name"
-    
-        # List contents of Release to see if the .exe exists
-        ls -l Release/
+
     
         # Check if executable exists
         if [ -f "$executable_name" ]; then
