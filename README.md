@@ -90,6 +90,8 @@ The segmentation fault happens because the program is trying to allocate too muc
 - Optionally, increase the stack size temporarily to test larger arrays.
 - Compare heap vs. stack memory allocation.
 
+---
+
 ## Conclusion
 
 This program helps in understanding how stack overflows occur when you exceed the system's stack size limit. It provides insight into the importance of memory management in software development and how systems handle overflow situations. For advanced learning, explore dynamic memory allocation, recursion, signal handling, and cross-platform memory differences.
