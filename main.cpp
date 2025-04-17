@@ -5,7 +5,7 @@ int main() {
     cout << "Attempting to allocate a large local array on the stack..." << endl;
 
     // const size_t arraySize = 100000000;  // 100 million ints = ~400MB
-    const size_t arraySize = 1000000;
+    const size_t arraySize = 100000;
     // Allocate memory on the heap
     int* array_on_heap = new int[arraySize];
     cout << "Heap address of array: " << array_on_heap << endl;
