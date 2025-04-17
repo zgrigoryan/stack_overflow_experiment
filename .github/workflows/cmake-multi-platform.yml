@@ -77,35 +77,19 @@ jobs:
           exit 1
         fi
     
-    - name: Run executable and check output format
+    # Linux/macOS (bash) -----------------------
+    - name: Run executable (non‑Windows)
+      if: runner.os != 'Windows'
       shell: bash
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
-        executable_name="stack_overflow"
-        
-        # Check if we are running on Windows
-        if [[ "$RUNNER_OS" == "Windows" ]]; then
-          # Make sure executable path is correct for Windows
-          executable_name="Release/${executable_name}.exe"
-        fi
-        
-        echo "Full executable path: $executable_name"
-    
-        # Check if the executable exists
-        if [ -f "$executable_name" ]; then
-          echo "Executable exists: $executable_name"
-        else
-          echo "Executable not found!"
-          exit 1
-        fi
-        
-        # Try to run it if it exists
-        echo "Running $executable_name"
-        
-        if [[ "$RUNNER_OS" == "Windows" ]]; then
-          # On Windows, we run the executable from the Release directory (without an extra './Release/')
-          ./$executable_name > app_output.txt
-        else
-          # For non-Windows platforms, we just use the executable name
-          ./$executable_name > app_output.txt
-        fi
+        ./stack_overflow > app_output.txt
+
+    # Windows (PowerShell) ---------------------
+    - name: Run executable (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      working-directory: ${{ steps.strings.outputs.build-output-dir }}
+      run: |
+        & ".\Release\stack_overflow.exe" | Tee‑Object -FilePath app_output.txt
+ 
