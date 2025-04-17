@@ -85,11 +85,10 @@ jobs:
       run: |
         ./stack_overflow > app_output.txt
 
-    # Windows (PowerShell) ---------------------
+    # Windows (PowerShell)
     - name: Run executable (Windows)
       if: runner.os == 'Windows'
       shell: pwsh
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
-        & ".\Release\stack_overflow.exe" | Tee‑Object -FilePath app_output.txt
- 
+        & '.\Release\stack_overflow.exe' *> app_output.txt
