@@ -85,10 +85,18 @@ jobs:
       run: |
         ./stack_overflow > app_output.txt
 
-    # Windows (PowerShell)
     - name: Run executable (Windows)
       if: runner.os == 'Windows'
       shell: pwsh
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
-        & '.\Release\stack_overflow.exe' *> app_output.txt
+        # run it and capture stdout + stderr
+        & '.\Release\stack_overflow.exe' *>&1 |
+          Tee-Object -FilePath app_output.txt
+    
+        Write-Host "Program exited with code $LASTEXITCODE"
+    
+        # Make the job fail only if you decide it should
+        if ($LASTEXITCODE -ne 0) {
+            throw "stack_overflow.exe failed"
+        }
